@@ -1,0 +1,26 @@
+---
+- name: Manage KBUS Application
+  hosts: all
+  gather_facts: no
+  vars:
+    state: started
+
+  tasks:
+    - name: Check required variables
+      fail: 
+        msg: Variable '{{ item }}' is not defined
+      when: item not in vars
+      with_items: 
+        - kbus_image_name
+        - kbus_image_version
+        - container_registry
+        - port_prefix
+
+    - name: Manage container
+      docker_container:
+        name: kbus_app
+        image: "{{ container_registry }}/{{ kbus_image_name }}:{{ kbus_image_version }}"
+        state: "{{ state }}"
+        ports:
+          - "{{ port_prefix }}80:80"
+
