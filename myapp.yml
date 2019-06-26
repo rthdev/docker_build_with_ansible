@@ -4,6 +4,8 @@
   gather_facts: no
   vars:
     state: started
+    network_name: kbus_network
+    network_state: present
 
   tasks:
     - name: Check required variables
@@ -15,12 +17,31 @@
         - kbus_image_version
         - container_registry
         - port_prefix
+    
+    - name: Container network
+      docker_network:
+        name: "{{ network_name }}"
+        state: "{{ network_state }}"
 
-    - name: Manage container
+    - name: Manage backend container(s)
       docker_container:
-        name: kbus_app
+        name: "{{ item }}"
+        image: "{{ container_registry }}/{{ kbus_image_name }}:{{ kbus_image_version }}"
+        state: "{{ state }}"
+        networks:
+          - name: "{{ network_name }}"
+        networks_cli_compatible: yes
+      with_items:
+        - kbus_app1
+        - kbus_app2
+
+    - name: Manage frontend container
+      docker_container:
+        name: kbus_frontend
         image: "{{ container_registry }}/{{ kbus_image_name }}:{{ kbus_image_version }}"
         state: "{{ state }}"
         ports:
           - "{{ port_prefix }}80:80"
-
+        networks:
+          - name: "{{ network_name }}"
+        networks_cli_compatible: yes
