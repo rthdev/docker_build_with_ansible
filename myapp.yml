@@ -6,8 +6,15 @@
     state: started
     network_name: kbus_network
     network_state: present
+    required_packages:
+      - python-docker-py
 
   tasks:
+    - name: Required packages
+      yum:
+        name: "{{ required_packages }}"
+        state: installed
+
     - name: Check required variables
       fail: 
         msg: Variable '{{ item }}' is not defined
