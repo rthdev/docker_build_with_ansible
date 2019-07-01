@@ -11,3 +11,6 @@ Build Version v1.1 of container image
 Configure docker network and containers according to playbook and inventory variables
 
 `# ansible-playbook -i hosts.yml myapp.yml`
+
+Start Demonstration of docker image building, container creation, updates + controlling/deployment via ansible
+`# ./demo.sh`
