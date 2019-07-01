@@ -13,4 +13,5 @@ Configure docker network and containers according to playbook and inventory vari
 `# ansible-playbook -i hosts.yml myapp.yml`
 
 Start Demonstration of docker image building, container creation, updates + controlling/deployment via ansible
+
 `# ./demo.sh`
