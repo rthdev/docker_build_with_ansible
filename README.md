@@ -6,6 +6,6 @@ Requirements
 
 How to use
 ----------
-    # git clone https://github.com/rthdev/docker_build_with_ansible.git
+    # git clone https://github.com/rthdev/rthex_docker_build_with_ansible.git
     # cd docker_build_with_ansible
     # ./demo.sh
